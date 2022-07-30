@@ -61,10 +61,10 @@ describe('UI tests for sign in page', () => {
     cy.url().should('eq','http://localhost:3000/signup')
     cy.get(sign_up_page.first_Name_field).type(data.name).should('have.value', data.name)
     cy.get(sign_up_page.last_Name_field).type(data.last_Name).should('have.value', data.last_Name)
-    cy.get(sign_up_page.username_sing_up_field).type(data.username).should('have.value', data.username)
-    cy.get(sign_up_page.password_sing_up_field).type(data.password).should('have.value', data.password)
+    cy.get(sign_up_page.username_sign_up_field).type(data.username).should('have.value', data.username)
+    cy.get(sign_up_page.password_sign_up_field).type(data.password).should('have.value', data.password)
     cy.get(sign_up_page.confirm_password_field).type(data.password).should('have.value', data.password)
-    cy.get(sign_up_page.sing_up_button).should('be.visible').and('have.text', 'Sign Up').click()
+    cy.get(sign_up_page.sign_up_button).should('be.visible').and('have.text', 'Sign Up').click()
 
   }) 
 // 2. should allow a visitor to login
@@ -80,7 +80,7 @@ describe('UI tests for sign in page', () => {
 
 // 3. should allow a visitor to logout
   it("should allow a visitor to logout", function() {
-    cy.get(sign_in_page. logout_aft_sing_up_button).should('be.visible').click()
+    cy.get(sign_in_page. logout_aft_sign_up_button).should('be.visible').click()
     cy.url().should('eq', 'http://localhost:3000/signin')
   }) 
 
@@ -89,23 +89,64 @@ describe('UI tests for sign in page', () => {
 
 // Homework 21.07
 // 4. should display login errors
-it("should display login errors", function() {
-  cy.get(sign_in_page.username_field).blur()
-  cy.get(sign_in_page.username_helper_text).should('have.text', 'Username is required')
-  cy.get(sign_in_page.password_field).type('one').blur()
-  cy.get(sign_in_page.password_helper_text).should('be.visible').and('have.text','Password must contain at least 4 characters')  
-}) 
-
+  it("should display login errors", function() {
+    cy.get(sign_in_page.username_field).blur()
+    cy.get(sign_in_page.username_helper_text).should('have.text', 'Username is required')
+    cy.get(sign_in_page.password_field).type('one').blur()
+    cy.get(sign_in_page.password_helper_text).should('be.visible').and('have.text', 'Password must contain at least 4 characters')  
+  }) 
 // 5. should display signup errors
-// 6. should error for an invalid user
-// 7. should error for an invalid password for existing user
-//  -------------------------------
-// create new spec file for bank_accounts tests, automate following tests:
-// 1. creates a new bank account
-// 2. should display bank account form errors
-// 3. user should be able to delete a bank account
+  it("should display signup errors", function() {
+    cy.get(sign_in_page.dont_have_an_account_link).click()
+    
+    cy.get(sign_up_page.first_Name_field).blur()
+    cy.get(sign_up_page.first_name_helper_text).should('be.visible').and('have.text', 'First Name is required')
+    
+    cy.get(sign_up_page.last_Name_field).focus().blur()
+    cy.get(sign_up_page.last_name_helper_text).should('be.visible').and('have.text', 'Last Name is required')
 
-// + create Cypress custom command for user ui_sign_up, ui_login, ui_logout, ui_onboarding
+    cy.get(sign_up_page.username_sign_up_field).focus().blur()
+    cy.get(sign_up_page.user_name_helper_text).should('be.visible').and('have.text', 'Username is required')
+
+    cy.get(sign_up_page.password_sign_up_field).focus().blur()
+    cy.get(sign_up_page.password_helper_text).should('be.visible').and('have.text', 'Enter your password')
+
+    cy.get(sign_up_page.confirm_password_field).focus().blur()
+    cy.get(sign_up_page.confirm_password_helper_text).should('be.visible').and('have.text', 'Confirm your password')
+
+    cy.get(sign_up_page.password_sign_up_field).type('one')
+    cy.get(sign_up_page.password_helper_text).should('be.visible').and('have.text', 'Password must contain at least 4 characters')
+
+    cy.get(sign_up_page.confirm_password_field).type('two')
+    cy.get(sign_up_page.confirm_password_helper_text).should('be.visible').and('have.text', 'Password does not match')
+
+
+  }) 
+
+// 6. should error for an invalid user
+  it("should error for an invalid user", function() {
+    cy.get(sign_up_page.sign_in_button).click().url('eq', 'http://localhost:3000/signin')
+
+    cy.get(sign_in_page.username_field).type('random_username').should('have.value', 'random_username')
+    cy.get(sign_in_page.password_field).type(data.password).should('have.value', data.password)
+    cy.get(sign_in_page.enabled_sign_in_button).click()
+
+    cy.get(sign_in_page.sign_in_invalid_message).should('be.visible').and('have.text', 'Username or password is invalid').url('eq', 'http://localhost:3000/signin')
+
+  }) 
+
+  // 7. should error for an invalid password for existing user
+  it("should error for an invalid password for existing user", function() {
+    
+    cy.get(sign_in_page.username_field).type(data.username).should('have.value', data.username)
+    cy.get(sign_in_page.password_field).type('random_password').should('have.value', 'random_password')
+    cy.get(sign_in_page.enabled_sign_in_button).click()
+
+    cy.get(sign_in_page.sign_in_invalid_message).should('be.visible').and('have.text', 'Username or password is invalid')
+    
+  }) 
+
+
 
 // homework 26.7 // use already existing users from database-seed.json file from app project; password - s3cret
 // 1. navigates to the new transaction form, selects a user and submits a transaction payment
