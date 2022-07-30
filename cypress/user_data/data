@@ -1,0 +1,7 @@
+export const data = {
+  name: 'Roman',
+  last_Name: 'Havryliuk',
+  username: 'romanes_s',
+  password: 'qwerty',
+  confirm: 'qwerty',
+}
