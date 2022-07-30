@@ -1,7 +1,11 @@
 export const data = {
   name: 'Roman',
   last_Name: 'Havryliuk',
-  username: 'romanes_s',
+  username: 'romanes_s6',
   password: 'qwerty',
   confirm: 'qwerty',
-}
+
+  bank_name: 'Privat',
+  routing_number: '777777777',
+  account_number: '888888888'
+  }
