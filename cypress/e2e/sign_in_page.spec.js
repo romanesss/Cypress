@@ -1,4 +1,6 @@
 const {sign_in_page} = require("../selectors/sign_in_page");
+const {sign_up_page} = require("../selectors/sign_up_page");
+const {data} = require("../user_data/data");
 
 describe('UI tests for sign in page', () => {
 
@@ -50,16 +52,50 @@ describe('UI tests for sign in page', () => {
   it("should should have should show Cypress copyright link that leads to 'https://www.cypress.io/'", function() {
     cy.get(sign_in_page.link_to_cypress).should('be.visible').and('have.attr', 'href', 'https://cypress.io')
   })
-})
 
-  // Homework 19.07:
+
+// Homework 19.07:
 // 1. should allow a visitor to sign-up
+  it("should allow a visitor to sign-up", function() {
+    cy.get(sign_in_page.dont_have_an_account_link).click()
+    cy.url().should('eq','http://localhost:3000/signup')
+    cy.get(sign_up_page.first_Name_field).type(data.name).should('have.value', data.name)
+    cy.get(sign_up_page.last_Name_field).type(data.last_Name).should('have.value', data.last_Name)
+    cy.get(sign_up_page.username_sing_up_field).type(data.username).should('have.value', data.username)
+    cy.get(sign_up_page.password_sing_up_field).type(data.password).should('have.value', data.password)
+    cy.get(sign_up_page.confirm_password_field).type(data.password).should('have.value', data.password)
+    cy.get(sign_up_page.sing_up_button).should('be.visible').and('have.text', 'Sign Up').click()
+
+  }) 
 // 2. should allow a visitor to login
+  it("should allow a visitor to login", function() {
+  
+    cy.get(sign_in_page.username_field).type(data.username).should('have.value', data.username)
+    cy.get(sign_in_page.password_field).type(data.password).should('have.value', data.password)
+    cy.get(sign_in_page.enabled_sign_in_button).should('be.visible').and('have.text', 'Sign In').click()
+    cy.url().should('eq', 'http://localhost:3000/')
+
+
+  }) 
+
 // 3. should allow a visitor to logout
+  it("should allow a visitor to logout", function() {
+    cy.get(sign_in_page. logout_aft_sing_up_button).should('be.visible').click()
+    cy.url().should('eq', 'http://localhost:3000/signin')
+  }) 
+
+
 // -----------------------------------
 
 // Homework 21.07
 // 4. should display login errors
+it("should display login errors", function() {
+  cy.get(sign_in_page.username_field).blur()
+  cy.get(sign_in_page.username_helper_text).should('have.text', 'Username is required')
+  cy.get(sign_in_page.password_field).type('one').blur()
+  cy.get(sign_in_page.password_helper_text).should('be.visible').and('have.text','Password must contain at least 4 characters')  
+}) 
+
 // 5. should display signup errors
 // 6. should error for an invalid user
 // 7. should error for an invalid password for existing user
@@ -78,3 +114,4 @@ describe('UI tests for sign in page', () => {
 // 4. submits a transaction payment and verifies the deposit for the receiver
 // 5. submits a transaction request and accepts the request for the receiver
 // 6. searches for a user by attribute
+})

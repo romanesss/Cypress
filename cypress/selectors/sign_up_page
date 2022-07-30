@@ -1,0 +1,8 @@
+export const sign_up_page = {
+  first_Name_field: '#firstName',
+  last_Name_field: '#lastName',
+  username_sing_up_field: '#username',
+  password_sing_up_field: '#password',
+  confirm_password_field: '#confirmPassword',
+  sing_up_button: '[class="MuiButton-label"]'
+}
