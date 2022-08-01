@@ -37,7 +37,8 @@ describe('UI tests for sign in page', () => {
   })
   // 5. check "Remember me" checkbox
   it("should click check 'Remember me' checkbox",function() {
-    cy.get(sign_in_page.checkbox).click()
+    cy.get(sign_in_page.checkbox).click().should('be.checked')
+  
   })
   // 6. should show disabled by default sign in btn
   it("should show disabled by default sign in btn", function() {
@@ -69,7 +70,7 @@ describe('UI tests for sign in page', () => {
   }) 
 // 2. should allow a visitor to login
   it("should allow a visitor to login", function() {
-  
+    
     cy.get(sign_in_page.username_field).type(data.username).should('have.value', data.username)
     cy.get(sign_in_page.password_field).type(data.password).should('have.value', data.password)
     cy.get(sign_in_page.enabled_sign_in_button).should('be.visible').and('have.text', 'Sign In').click()

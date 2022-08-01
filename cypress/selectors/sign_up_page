@@ -16,6 +16,8 @@ export const sign_up_page = {
   confirm_password_helper_text: '#confirmPassword-helper-text',
 
   sign_up_button: '[class="MuiButton-label"]',
-  sign_in_button: '[class="MuiGrid-root MuiGrid-item"]'
+  sign_in_button: '[class="MuiGrid-root MuiGrid-item"]',
+
+  have_account: '[class = "MuiGrid-root MuiGrid-item]'
    
 }
