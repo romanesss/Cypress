@@ -17,33 +17,39 @@ describe('UI tests for sign in page', () => {
   })
 
   // Homework 14.07: - Done
+  
   // 1. should show typeable Username field
   it("should show typeable Username field", function() {
     cy.get(sign_in_page.username_field).should('be.visible').and('be.not.disabled')
   })
+
   // 2. should show typeable Password field
   it("should show typeable Password field", function() {
     cy.get(sign_in_page.password_field).should('be.visible').and('be.not.disabled')
   })
+
   // 3. should show Username and Password placeholders
   it("should show typeable show Username and Password placeholders", function() {
     cy.get(sign_in_page.username_placeholder_field).should('be.visible').and('have.text', 'Username')
     cy.get(sign_in_page.password_placeholder_field).should('be.visible').and('have.text', 'Password')
   })
+
   // 4. should show 'Username is required' error if user clicks on it and then click outside this field and didn't enter any value
   it("should show  'Username is required' error if user clicks on it and then click outside this field and didn't enter any value", function() {
     cy.get(sign_in_page.password_field).click()
     cy.get(sign_in_page.username_helper_text).should('be.visible').and('have.text', 'Username is required')
   })
+
   // 5. check "Remember me" checkbox
   it("should click check 'Remember me' checkbox",function() {
     cy.get(sign_in_page.checkbox).click().should('be.checked')
-  
   })
+
   // 6. should show disabled by default sign in btn
   it("should show disabled by default sign in btn", function() {
     cy.get(sign_in_page.disabled_sign_in_button).should('be.visible').and('be.disabled')
   })
+
   // 7. should have 'Don't have an account? Sign Up' clickable link under 'Sign in' btn\
   it("should should have 'Don't have an account? Sign Up' clickable link under 'Sign in' btn", function() {
     cy.get(sign_in_page.dont_have_an_account_link).should('be.visible').and('be.not.disabled')
@@ -53,7 +59,6 @@ describe('UI tests for sign in page', () => {
   it("should should have should show Cypress copyright link that leads to 'https://www.cypress.io/'", function() {
     cy.get(sign_in_page.link_to_cypress).should('be.visible').and('have.attr', 'href', 'https://cypress.io')
   })
-
 
 // Homework 19.07:
 // 1. should allow a visitor to sign-up
@@ -70,24 +75,20 @@ describe('UI tests for sign in page', () => {
   }) 
 // 2. should allow a visitor to login
   it("should allow a visitor to login", function() {
-    
+    cy.url().should('eq','http://localhost:3000/signin')
     cy.get(sign_in_page.username_field).type(data.username).should('have.value', data.username)
     cy.get(sign_in_page.password_field).type(data.password).should('have.value', data.password)
     cy.get(sign_in_page.enabled_sign_in_button).should('be.visible').and('have.text', 'Sign In').click()
     cy.url().should('eq', 'http://localhost:3000/')
-
-
   }) 
 
 // 3. should allow a visitor to logout
   it("should allow a visitor to logout", function() {
     cy.get(sign_in_page. logout_aft_sign_up_button).should('be.visible').click()
-    cy.url().should('eq', 'http://localhost:3000/signin')
+    cy.url().should('eq','http://localhost:3000/signin')
   }) 
 
-
 // -----------------------------------
-
 // Homework 21.07
 // 4. should display login errors
   it("should display login errors", function() {
@@ -121,7 +122,6 @@ describe('UI tests for sign in page', () => {
     cy.get(sign_up_page.confirm_password_field).type('two')
     cy.get(sign_up_page.confirm_password_helper_text).should('be.visible').and('have.text', 'Password does not match')
 
-
   }) 
 
 // 6. should error for an invalid user
@@ -147,13 +147,19 @@ describe('UI tests for sign in page', () => {
     
   }) 
 
+  //----------------------------------------------------------------------------------------------------------------------------//
+  //creates users a and b
+  it('creating user a and b', function() {
+    cy.ui_sign_up(data.user_a_name, data.user_a_last_Name, data.user_a_username, data.user_a_password)
+    cy.ui_login(data.user_a_username, data.user_a_password)        
+    cy.ui_onboarding(data.bank_name, data.routing_number, data.account_number)
+    cy.ui_logout()
 
+    cy.ui_sign_up(data.user_b_name, data.user_b_last_Name, data.user_b_username, data.user_b_password)
+    cy.ui_login(data.user_b_username, data.user_b_password)        
+    cy.ui_onboarding(data.bank_name, data.routing_number, data.account_number)
+    cy.ui_logout()
 
-// homework 26.7 // use already existing users from database-seed.json file from app project; password - s3cret
-// 1. navigates to the new transaction form, selects a user and submits a transaction payment
-// 2. navigates to the new transaction form, selects a user and submits a transaction request"
-// 3. displays new transaction errors
-// 4. submits a transaction payment and verifies the deposit for the receiver
-// 5. submits a transaction request and accepts the request for the receiver
-// 6. searches for a user by attribute
+  })
+
 })

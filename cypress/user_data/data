@@ -1,11 +1,27 @@
 export const data = {
   name: 'Roman',
   last_Name: 'Havryliuk',
-  username: 'romanes_sxxx',
+  username: 'romanes_sq3',
   password: 'qwerty',
   confirm: 'qwerty',
 
+  user_a_name: 'Max',
+  user_a_last_Name: 'Auges',
+  user_a_username: 'max5',
+  user_a_password: 'qwerty',
+  user_a_confirm: 'qwerty',
+  a_amount: '555',
+
+  user_b_name: 'Oleg',
+  user_b_last_Name: 'Kent',
+  user_b_username: 'kentoleg2',
+  user_b_password: 'qwerty',
+  user_b_confirm: 'qwerty',
+
   bank_name: 'Privat',
   routing_number: '777777777',
-  account_number: '888888888'
+  account_number: '888888888',
+
+  amount: '123',
+  note: 'test transaction'
   }
