@@ -6,6 +6,7 @@ const {data} = require("../user_data/data");
 // + create Cypress custom command for user ui_sign_up, ui_login, ui_logout, ui_onboarding
 
 Cypress.Commands.add('ui_login', (username, password) => {
+    cy.visit('http://localhost:3000/signin')
     cy.get(sign_in_page.username_field).type(username)
     cy.get(sign_in_page.password_field).type(password)
     cy.get(sign_in_page.enabled_sign_in_button).click()

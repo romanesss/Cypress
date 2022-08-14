@@ -1,5 +1,3 @@
-const {sign_in_page} = require("../selectors/sign_in_page");
-const {sign_up_page} = require("../selectors/sign_up_page");
 const {bank_accounts_page} = require("../selectors/bank_accounts_page");
 const {data} = require("../user_data/data");
 
@@ -20,8 +18,6 @@ describe('UI tests for bank_account tests', () => {
         
     
     })
-
- 
 
 // 2. should display bank account form errors
     it('should display bank account form errors', () => {
@@ -56,6 +52,4 @@ describe('UI tests for bank_account tests', () => {
         cy.contains('Delete').click()
         cy.contains('(Deleted)')
     })
-
-
 }) 
